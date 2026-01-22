@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Catalog | Arabian Gulf Investment Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- VARIABLES DE DESIGN --- */
+        :root {
+            --primary-blue: #14213d;
+            --accent-gold: #fca311;
+            --dark-gray: #0b0b0b;
+            --card-bg: #16213e;
+            --text-white: #ffffff;
+            --whatsapp-green: #25d366;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--dark-gray); color: var(--text-white); overflow-x: hidden; line-height: 1.6; }
+
+        /* --- EFFET DE FLOU --- */
+        #main-content { transition: filter 0.5s ease; }
+        .blur-effect { filter: blur(12px); pointer-events: none; user-select: none; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between;
+            align-items: center; padding: 1.2rem 5%; background: var(--primary-blue);
+            z-index: 3000; border-bottom: 2px solid var(--accent-gold);
+        }
+        .logo { font-weight: bold; font-size: 1.6rem; color: var(--accent-gold); text-decoration: none; display: flex; align-items: center; gap: 12px; }
+        .logo i { animation: spin 4s linear infinite; }
+
+        /* --- SIDEBAR MENU (25%) --- */
+        .nav-links { 
+            position: fixed; right: -100%; top: 0; width: 25%; height: 100vh; 
+            background: rgba(20, 33, 61, 0.98); display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; list-style: none; gap: 2.5rem; 
+            transition: var(--transition); z-index: 2500; border-left: 2px solid var(--accent-gold);
+            box-shadow: -15px 0 35px rgba(0,0,0,0.7);
+        }
+        .nav-links.active { right: 0; }
+        .nav-links a { 
+            text-decoration: none; color: white; font-size: 1.3rem; 
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; 
+        }
+        .nav-links a:hover { color: var(--accent-gold); transform: translateX(-10px); }
+
+        .menu-toggle { display: flex; flex-direction: column; cursor: pointer; gap: 6px; z-index: 3100; }
+        .bar { width: 30px; height: 3px; background: var(--accent-gold); border-radius: 2px; transition: 0.4s; }
+        .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+        .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        @media (max-width: 1024px) { .nav-links { width: 40%; } }
+        @media (max-width: 768px) { .nav-links { width: 85%; } }
+
+        /* --- QUICK NAVIGATION BAR --- */
+        .quick-nav {
+            position: sticky; top: 74px; background: rgba(10, 10, 10, 0.9); 
+            padding: 15px 5%; display: flex; gap: 15px; overflow-x: auto; 
+            z-index: 1000; border-bottom: 1px solid #333; backdrop-filter: blur(5px);
+        }
+        .quick-nav::-webkit-scrollbar { display: none; }
+        .quick-link {
+            white-space: nowrap; padding: 10px 20px; background: #1a1a1a; 
+            border: 1px solid #444; color: #aaa; text-decoration: none; 
+            border-radius: 30px; font-size: 0.85rem; transition: 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .quick-link:hover, .quick-link.active { border-color: var(--accent-gold); color: var(--accent-gold); background: var(--primary-blue); }
+
+        /* --- WHATSAPP FLOATING BUTTON --- */
+        .whatsapp-float {
+            position: fixed; width: 65px; height: 65px; bottom: 40px; right: 40px;
+            background-color: var(--whatsapp-green); color: white; border-radius: 50px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; box-shadow: 2px 5px 20px rgba(0,0,0,0.4);
+            z-index: 4000; text-decoration: none; transition: var(--transition);
+            animation: bounce-float 3s ease-in-out infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.15) rotate(5deg); background-color: #128c7e; }
+        
+        @keyframes bounce-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .whatsapp-float::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; border: 2px solid var(--whatsapp-green);
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        /* --- SECTIONS & HEADERS --- */
+        .header-section { 
+            padding: 160px 5% 60px; text-align: center; 
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=2070');
+            background-size: cover; background-position: center;
+        }
+        .header-section h1 { font-size: 3.5rem; text-transform: uppercase; letter-spacing: 4px; }
+        .header-section span { color: var(--accent-gold); }
+
+        .category-container { padding: 80px 0; border-bottom: 1px solid #222; }
+        .category-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 5%; margin-bottom: 40px; }
+        .category-info h2 { font-size: 2.2rem; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 5px; }
+        .category-info p { color: #888; letter-spacing: 1px; }
+
+        /* --- SLIDER SYSTEM --- */
+        .slider-wrapper {
+            display: flex; overflow-x: auto; gap: 30px; padding: 20px 5%;
+            scrollbar-width: none;
+        }
+        .slider-wrapper::-webkit-scrollbar { display: none; }
+
+        .product-card {
+            min-width: 350px; background: var(--card-bg); border-radius: 15px;
+            border: 1px solid #222; transition: var(--transition); 
+            display: flex; flex-direction: column; overflow: hidden;
+            position: relative;
+        }
+        .product-card:hover { border-color: var(--accent-gold); transform: translateY(-15px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        
+        .product-img { width: 100%; height: 240px; object-fit: cover; border-bottom: 3px solid var(--accent-gold); transition: 0.5s; }
+        .product-card:hover .product-img { transform: scale(1.1); }
+        
+        .product-body { padding: 25px; flex-grow: 1; position: relative; background: var(--card-bg); z-index: 2; }
+        .product-body h3 { margin-bottom: 15px; font-size: 1.4rem; color: #fff; }
+        .product-body p { font-size: 0.95rem; color: #ccc; margin-bottom: 20px; height: 60px; overflow: hidden; }
+
+        .tech-specs { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .tech-specs li { font-size: 0.75rem; background: rgba(252, 163, 17, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 5px; border: 1px solid rgba(252, 163, 17, 0.3); }
+
+        .card-footer { padding: 20px 25px; background: #0f172a; border-top: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .btn-details { color: white; text-decoration: none; font-weight: bold; font-size: 0.85rem; text-transform: uppercase; transition: 0.3s; }
+        .btn-details:hover { color: var(--accent-gold); }
+
+        /* --- DECORATIVE GEARS --- */
+        .gear-divider { text-align: center; padding: 60px 0; background: #080808; }
+        .gear-icon { font-size: 4rem; color: var(--accent-gold); opacity: 0.15; animation: spin 15s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        footer { padding: 80px 5%; background: #050505; text-align: center; border-top: 2px solid var(--accent-gold); }
+        footer p { color: #666; margin-top: 10px; }
+
+    </style>
+</head>
+<body>
+
+    <a href="https://wa.me/971000000000" class="whatsapp-float" target="_blank" title="Contact us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <i class="fas fa-cog"></i>
+            <span>AGIT</span>
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About AGIT</a></li>
+        <li><a href="index.html#sectors">Our Sectors</a></li>
+        <li><a href="products.html">Product Catalog</a></li>
+        <li><a href="index.html#contact">Get a Quote</a></li>
+    </ul>
+
+    <div id="main-content">
+        <header class="header-section">
+            <h1>Industrial <span>Solutions</span></h1>
+            <p>High-Performance Equipment for Global Energy & Infrastructure Projects</p>
+        </header>
+
+        <div class="quick-nav">
+            <a href="#oil-gas" class="quick-link active"><i class="fas fa-oil-well"></i> Oil & Gas</a>
+            <a href="#machinery" class="quick-link"><i class="fas fa-truck-monster"></i> Heavy Machinery</a>
+            <a href="#safety" class="quick-link"><i class="fas fa-fire-extinguisher"></i> Fire & Safety</a>
+            <a href="#electrical" class="quick-link"><i class="fas fa-bolt"></i> Electrical Systems</a>
+            <a href="#building" class="quick-link"><i class="fas fa-trowel-bricks"></i> Building Materials</a>
+        </div>
+
+        <section class="category-container" id="oil-gas">
+            <div class="category-header">
+                <div class="category-info">
+                    <h2>Oil & Gas Extraction</h2>
+                    <p>Sector S1 | Upstream & Midstream Equipment</p>
+                </div>
+                <div class="gear-icon-small"><i class="fas fa-cog gear-icon" style="font-size: 2rem;"></i></div>
+            </div>
+            <div class="slider-wrapper">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400" class="product-img" alt="Valve">
+                    <div class="product-body">
+                        <h3>API 6A Wellhead Gate Valve</h3>
+                        <p>Designed for high-pressure petroleum extraction with anti-corrosive alloy coating.</p>
+                        <ul class="tech-specs">
+                            <li>15,000 PSI</li>
+                            <li>NACE MR0175</li>
+                            <li>Forged Steel</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 0.7rem; color: #555;">REF: AG-OG-202</span>
+                        <a href="#" class="btn-details">Specifications <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1544717305-ad2d131cd335?q=80&w=400" class="product-img" alt="Drill">
+                    <div class="product-body">
+                        <h3>Diamond Matrix PDC Bit</h3>
+                        <p>Optimized cutters for high-speed drilling through abrasive rock formations.</p>
+                        <ul class="tech-specs">
+                            <li>8.5 inch</li>
+                            <li>7-Bladed</li>
+                            <li>Premium Matrix</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 0.7rem; color: #555;">REF: AG-OG-505</span>
+                        <a href="#" class="btn-details">Specifications <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1574689049591-3dd49738c8c2?q=80&w=400" class="product-img" alt="Monitoring">
+                    <div class="product-body">
+                        <h3>Multi-Phase Flow Meter</h3>
+                        <p>Non-intrusive real-time monitoring of oil, water, and gas flow rates.</p>
+                        <ul class="tech-specs">
+                            <li>Digital Interface</li>
+                            <li>Real-time Data</li>
+                            <li>Subsea Ready</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 0.7rem; color: #555;">REF: AG-OG-991</span>
+                        <a href="#" class="btn-details">Specifications <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="gear-divider"><i class="fas fa-cog gear-icon"></i></div>
+
+        <section class="category-container" id="machinery">
+            <div class="category-header">
+                <div class="category-info">
+                    <h2>Heavy Machinery Trading</h2>
+                    <p>Sector S39 | Construction & Earthmoving</p>
+                </div>
+            </div>
+            <div class="slider-wrapper">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1580901234672-0081b7640498?q=80&w=400" class="product-img" alt="Excavator">
+                    <div class="product-body">
+                        <h3>Crawler Excavator XE-500</h3>
+                        <p>Heavy-duty excavator with reinforced boom for desert and rocky terrain construction.</p>
+                        <ul class="tech-specs">
+                            <li>50 Ton Class</li>
+                            <li>Stage V Engine</li>
+                            <li>360° Vision</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 0.7rem; color: #555;">REF: AG-HM-101</span>
+                        <a href="#" class="btn-details">Inquire <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1532635224-cf024e66d122?q=80&w=400" class="product-img" alt="Loader">
+                    <div class="product-body">
+                        <h3>High-Lift Wheel Loader</h3>
+                        <p>Perfect for bulk material handling in refineries and large infrastructure sites.</p>
+                        <ul class="tech-specs">
+                            <li>18 Ton Payload</li>
+                            <li>Auto-Lube</li>
+                            <li>Eco-Drive</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 0.7rem; color: #555;">REF: AG-HM-304</span>
+                        <a href="#" class="btn-details">Inquire <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-container" id="safety">
+            <div class="category-header">
+                <div class="category-info">
+                    <h2>Industrial Safety</h2>
+                    <p>Sector S57 | Protection & Fire Suppression</p>
+                </div>
+            </div>
+            <div class="slider-wrapper">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?q=80&w=400" class="product-img" alt="Fire">
+                    <div class="product-body">
+                        <h3>CO2 Suppression System</h3>
+                        <p>Automatic fire detection and suppression for electrical control rooms and warehouses.</p>
+                        <ul class="tech-specs">
+                            <li>Fast Response</li>
+                            <li>UL Listed</li>
+                            <li>Modular Design</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span style="font-size: 0.7rem; color: #555;">REF: AG-SF-808</span>
+                        <a href="#" class="btn-details">Data Sheet <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">AGIT</h2>
+            <p>Arabian Gulf Investment Trading - Excellence in Industrial Trading & Maintenance.</p>
+            <p>&copy; 2026. All Rights Reserved. Licensed for International Trade.</p>
+            <div style="margin-top: 30px; font-size: 1.5rem; display: flex; justify-content: center; gap: 20px;">
+                <a href="#" style="color: #888;"><i class="fab fa-linkedin"></i></a>
+                <a href="#" style="color: #888;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color: #888;"><i class="fab fa-facebook"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const menuBtn = document.querySelector('#mobile-menu');
+        const navSidebar = document.querySelector('#navLinks');
+        const mainContent = document.querySelector('#main-content');
+        const quickLinks = document.querySelectorAll('.quick-link');
+
+        // Toggle Sidebar Menu
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('is-active');
+            navSidebar.classList.toggle('active');
+            mainContent.classList.toggle('blur-effect');
+        });
+
+        // Close sidebar when clicking on the content
+        mainContent.addEventListener('click', () => {
+            if(navSidebar.classList.contains('active')) {
+                menuBtn.classList.remove('is-active');
+                navSidebar.classList.remove('active');
+                mainContent.classList.remove('blur-effect');
+            }
+        });
+
+        // Quick Navigation Active State & Smooth Scroll offset
+        quickLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                quickLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Update Quick Nav on Scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.category-container');
+            let current = "";
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            quickLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Rotate gears on scroll for mechanical feel
+            const gears = document.querySelectorAll('.gear-icon');
+            gears.forEach(gear => {
+                gear.style.transform = `rotate(${window.scrollY * 0.15}deg)`;
+            });
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('is-active');
+                navSidebar.classList.remove('active');
+                mainContent.classList.remove('blur-effect');
+            });
+        });
+    </script>
+</body>
+</html>
