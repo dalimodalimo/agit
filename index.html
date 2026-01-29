@@ -52,6 +52,53 @@
         .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
         .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
+        /* --- PDF BAR (New Element) --- */
+        .pdf-action-bar {
+            position: fixed;
+            top: 80px; /* Just below header */
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 12px 5%;
+            background: rgba(27, 38, 59, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            transform: translateY(-100px);
+            animation: slideDown 1s ease forwards 1s;
+            border-bottom: 1px solid rgba(252, 163, 17, 0.1);
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
+        }
+
+        .pdf-btn {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 15px;
+            border: 1px solid var(--accent-gold);
+            border-radius: 20px;
+            transition: var(--transition-fast);
+        }
+
+        .pdf-btn i { color: var(--accent-gold); font-size: 1rem; }
+        .pdf-btn:hover { background: var(--accent-gold); color: var(--primary-blue); }
+        .pdf-btn:hover i { color: var(--primary-blue); }
+
+        @media (max-width: 768px) {
+            .pdf-action-bar { top: 75px; gap: 10px; flex-wrap: wrap; }
+            .pdf-btn { font-size: 0.65rem; padding: 5px 10px; }
+        }
+
         /* --- SIDEBAR MENU --- */
         .nav-links { 
             position: fixed; right: -100%; top: 0; width: 350px; height: 100vh; 
@@ -173,6 +220,15 @@
             <span class="bar"></span>
         </div>
     </nav>
+
+    <div class="pdf-action-bar">
+        <a href="documents/protfolio.pdf" class="pdf-btn" target="_blank" download>
+            <i class="fas fa-file-pdf"></i> Company Portfolio
+        </a>
+        <a href="documents/ARABIAN GULF INVESTMENT TRADING.pdf" class="pdf-btn" target="_blank" download>
+            <i class="fas fa-tags"></i> Our Brands
+        </a>
+    </div>
 
     <div class="nav-links" id="navLinks">
         <ul>
@@ -299,8 +355,10 @@
                     <p style="margin-bottom: 30px; color: #aaa;">Our technical team is ready to assist you with specifications, procurement, and logistics planning.</p>
                     <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 8px;">
                         <p><i class="fas fa-envelope" style="color: var(--accent-gold); width: 25px;"></i> info@arabiangit.com</p>
-                        <p style="margin-top: 15px;"><i class="fas fa-phone" style="color: var(--accent-gold); width: 25px;"></i> +968 91157897</p>
-                        <p style="margin-top: 15px;"><i class="fas fa-location-dot" style="color: var(--accent-gold); width: 25px;"></i> Bahla, Al Dakhiliyah, Oman</p>
+                        <p style="margin-top: 15px;"><i class="fas fa-phone" style="color: var(--accent-gold); width: 25px;"></i> +968 99422315</p>
+                        <p style="margin-top: 15px;"><i class="fas fa-location-dot" style="color: var(--accent-gold); width: 25px;"></i> ARABIAN GULF INVESTMENT TRADING
+P.O Box 503 PC 612, Bahla, Al Dakhiliyah
+Governorate, Sultanate Of Oman</p>
                     </div>
                 </div>
             </div>
@@ -321,6 +379,12 @@
                     <h4 style="color:var(--accent-gold); margin-bottom: 20px;">Sectors</h4>
                     <p>Oil & Gas Extraction</p>
                     <p>Heavy Machinery Trading</p>
+                    <p>Heavy Logistics</p>
+                    <p>Fire & Safety</p>
+                    <p>Digital Automation</p>
+                    <p>Energy Supplies</p>
+                    <p>Infrastructure</p>
+                    <p>Civil Engineering</p>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #111; font-size: 0.8rem; color: #444;">
@@ -331,7 +395,7 @@
 
     <button id="backToTop" title="Go to top"><i class="fas fa-arrow-up"></i></button>
     
-    <a href="https://wa.me/96891157897" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/96899422315" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
